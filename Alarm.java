@@ -1,25 +1,49 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Alarm {
-    final String message;
-    boolean active = false;
+    private final String message;
+    protected boolean active = false;
+    private LocalDateTime snoozeUntil;
 
-    Alarm(String message) {
+    public Alarm(String message) {
         this.message = message;
+        stopSnoozing();
     }
 
-    void turnOn() {
+    public void snooze() {
+        if (active)
+            snoozeUntil = LocalDateTime.now().plusSeconds(3);
+    }
+
+    public LocalDateTime getSnoozeUntil() {
+        return snoozeUntil;
+    }
+
+    public boolean isSnoozing() {
+        return snoozeUntil.isAfter(LocalDateTime.now());
+    }
+
+    private void stopSnoozing() {
+        snoozeUntil = LocalDateTime.now().minusSeconds(1);
+    }
+
+    public void turnOn() {
         active = true;
+        stopSnoozing();
     }
 
-    void turnOfF() {
+    public void turnOfF() {
         active = false;
+        stopSnoozing();
     }
 
-    String getReport() {
+    public String getReport() {
         return getReport(false);
     }
 
-    String getReport(boolean uppercase){
-        if (active) {
+    public String getReport(boolean uppercase){
+        if (active && !isSnoozing()) {
             if (uppercase) {
                 return message.toUpperCase();
             } else {
@@ -29,7 +53,19 @@ public class Alarm {
         return "";
     }
 
-    void sendReport() {
+    public void sendReport() {
         System.out.println(getReport());
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public static void main(String[] args) throws InterruptedException{
+        Alarm alarm = new Alarm("You have to wake up!!");
+        alarm.turnOn();
+        alarm.snooze();
+        Thread.sleep(500 * 6);
+        alarm.sendReport();
     }
 }
