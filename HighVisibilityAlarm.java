@@ -4,20 +4,17 @@ public class HighVisibilityAlarm extends Alarm{
         super(message);
     }
 
+    @Override
     public String getReport(boolean uppercase){
-        if (active && !isSnoozing()) {
-            if (uppercase) {
-                return getMessage().toUpperCase() + "!";
-            } else {
-                return getMessage() + "!";
-            }
-        }
-        return "";
+        String report = super.getReport(uppercase);
+        if (report.isEmpty())
+            return report;
+        return report + "!";
     }
 
     public static void main(String[] args) {
         HighVisibilityAlarm alarm = new HighVisibilityAlarm("test");
         alarm.turnOn();
-        System.out.println(alarm.getReport(true));
+        alarm.sendReport();
     }
 }

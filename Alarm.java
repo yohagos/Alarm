@@ -61,6 +61,11 @@ public class Alarm {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return getReport();
+    }
+
     public static void main(String[] args) throws InterruptedException{
         Alarm alarm = new Alarm("You have to wake up!!");
         alarm.turnOn();
