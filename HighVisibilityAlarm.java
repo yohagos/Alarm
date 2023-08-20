@@ -1,7 +1,14 @@
+import java.awt.*;
+
 public class HighVisibilityAlarm extends Alarm{
 
     HighVisibilityAlarm(String message){
         super(message);
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.ORANGE;
     }
 
     @Override

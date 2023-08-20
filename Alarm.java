@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.awt.Color;
 
 public class Alarm {
     private final String message;
@@ -9,6 +10,10 @@ public class Alarm {
     public Alarm(String message) {
         this.message = message;
         stopSnoozing();
+    }
+
+    public Color getColor(){
+        return null;
     }
 
     public void snooze() {
