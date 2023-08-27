@@ -1,8 +1,9 @@
+import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.awt.Color;
 
-public class Alarm {
+
+public abstract class Alarm implements Widget, PersistentObject {
     private final String message;
     protected boolean active = false;
     private LocalDateTime snoozeUntil;
@@ -10,6 +11,16 @@ public class Alarm {
     public Alarm(String message) {
         this.message = message;
         stopSnoozing();
+    }
+
+    @Override
+    public String getHelpText(){
+        return "I am an alarm. You can turn me on, off or snooze me";
+    }
+
+    @Override
+    public void save() {
+        System.out.println("Saving....");
     }
 
     public Color getColor(){
@@ -72,7 +83,7 @@ public class Alarm {
     }
 
     public static void main(String[] args) throws InterruptedException{
-        Alarm alarm = new Alarm("You have to wake up!!");
+        Alarm alarm = new HighVisibilityAlarm("You have to wake up!!");
         alarm.turnOn();
         alarm.snooze();
         Thread.sleep(500 * 6);
